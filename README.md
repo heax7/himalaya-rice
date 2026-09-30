@@ -70,7 +70,7 @@ This repository intentionally borrows architectural ideas, not code wholesale:
 ### 1. Get the repository
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/himalaya-rice.git
+git clone https://github.com/heax7/himalaya-rice.git
 cd himalaya-rice
 ```
 
