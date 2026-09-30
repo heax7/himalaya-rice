@@ -1,0 +1,50 @@
+#!/usr/bin/env python3
+"""Generate application theme layers from config/myrice/theme.toml."""
+from __future__ import annotations
+
+from pathlib import Path
+import re
+import tomllib
+
+ROOT = Path(__file__).resolve().parents[1]
+CONFIG = ROOT / "config"
+THEME_FILE = CONFIG / "myrice" / "theme.toml"
+
+with THEME_FILE.open("rb") as fh:
+    theme = tomllib.load(fh)
+
+meta = theme["meta"]
+font = theme["font"]
+c = theme["colors"]
+a = theme["appearance"]
+b = theme["blur"]
+an = theme["animations"]
+
+
+def hex_rgba(value: str, alpha: float) -> str:
+    value = value.lstrip("#")
+    return f"#{value}{round(alpha * 255):02X}"
+
+
+def write(path: Path, content: str) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content.rstrip() + "\n", encoding="utf-8")
+
+# Hyprland theme module
+hypr = f'''-- GENERATED FILE — edit config/myrice/theme.toml and run scripts/apply-theme.\n_G.himalaya_theme = {{\n    name = {meta['name']!r},\n    font = {{\n        ui = {font['ui']!r},\n        mono = {font['mono']!r},\n        size = {font['size']},\n    }},\n    colors = {{\n        background = {c['background']!r},\n        surface = {c['surface']!r},\n        surface_alt = {c['surface_alt']!r},\n        overlay = {c['overlay']!r},\n        foreground = {c['foreground']!r},\n        muted = {c['muted']!r},\n        primary = {c['primary']!r},\n        secondary = {c['secondary']!r},\n        accent = {c['accent']!r},\n        danger = {c['danger']!r},\n        success = {c['success']!r},\n        shadow = {c['shadow']!r},\n    }},\n    appearance = {{\n        rounding = {a['rounding']},\n        gaps_in = {a['gaps_in']},\n        gaps_out = {a['gaps_out']},\n        border_size = {a['border_size']},\n        active_opacity = {a['active_opacity']},\n        inactive_opacity = {a['inactive_opacity']},\n    }},\n    blur = {{\n        enabled = {str(b['enabled']).lower()},\n        size = {b['size']},\n        passes = {b['passes']},\n    }},\n    animations = {{\n        enabled = {str(an['enabled']).lower()},\n        speed = {an['speed']},\n    }},\n}}\n'''
+write(CONFIG / "hypr" / "theme.lua", hypr)
+
+# Waybar CSS
+waybar = f'''/* GENERATED FILE — edit config/myrice/theme.toml and run scripts/apply-theme. */\n@define-color background {c['background']};\n@define-color surface {hex_rgba(c['surface'], 0.86)};\n@define-color surface_alt {c['surface_alt']};\n@define-color overlay {c['overlay']};\n@define-color foreground {c['foreground']};\n@define-color muted {c['muted']};\n@define-color primary {c['primary']};\n@define-color secondary {c['secondary']};\n@define-color accent {c['accent']};\n@define-color danger {c['danger']};\n@define-color success {c['success']};\n@define-color border {hex_rgba(c['primary'], 0.24)};\n'''
+write(CONFIG / "waybar" / "theme.css", waybar)
+
+# Rofi theme
+rofi = f'''/* GENERATED FILE — edit config/myrice/theme.toml and run scripts/apply-theme. */\n* {{\n    bg: {hex_rgba(c['background'], 0.91)};\n    surface: {hex_rgba(c['surface'], 0.86)};\n    fg: {c['foreground']}FF;\n    muted: {c['muted']}FF;\n    primary: {c['primary']}FF;\n    accent: {c['accent']}FF;\n    border: {hex_rgba(c['primary'], 0.24)};\n}}\n\nwindow {{\n    width: 620px;\n    border: 1px;\n    border-color: @border;\n    border-radius: 16px;\n    background-color: @bg;\n    padding: 24px;\n}}\n\nmainbox {{\n    children: [inputbar, listview];\n    spacing: 16px;\n}}\n\ninputbar {{\n    padding: 12px 16px;\n    border-radius: 12px;\n    background-color: @surface;\n    children: [prompt, entry];\n}}\n\nprompt {{ text-color: @primary; }}\nentry {{ placeholder: "Search"; placeholder-color: @muted; text-color: @fg; }}\nlistview {{ lines: 8; columns: 1; fixed-height: false; spacing: 6px; }}\nelement {{ padding: 9px 12px; border-radius: 10px; }}\nelement selected {{ background-color: @primary; }}\nelement-text {{ text-color: @fg; }}\nelement-text selected {{ text-color: {c['background']}; }}\n'''
+write(CONFIG / "rofi" / "themes" / "himalaya.rasi", rofi)
+
+# Kitty theme
+kitty = f'''# GENERATED FILE — edit config/myrice/theme.toml and run scripts/apply-theme.\nforeground {c['foreground']}\nbackground {c['background']}\nselection_foreground {c['background']}\nselection_background {c['primary']}\ncursor {c['accent']}\ncursor_text_color {c['background']}\nurl_color {c['secondary']}\nactive_border_color {c['primary']}\ninactive_border_color {c['overlay']}\n\ncolor0 {c['surface']}\ncolor1 {c['danger']}\ncolor2 {c['success']}\ncolor3 {c['accent']}\ncolor4 {c['secondary']}\ncolor5 #AA9BD4\ncolor6 {c['primary']}\ncolor7 {c['foreground']}\ncolor8 #567079\ncolor9 #E78A96\ncolor10 #A6E4B9\ncolor11 #F0C77C\ncolor12 #A8CDF2\ncolor13 #C0B8E8\ncolor14 #8BE7D7\ncolor15 #F4FBFA\n'''
+write(CONFIG / "kitty" / "theme.conf", kitty)
+
+print(f"Applied theme: {meta['name']}")
+print("Generated: hypr/theme.lua, waybar/theme.css, rofi/themes/himalaya.rasi, kitty/theme.conf")

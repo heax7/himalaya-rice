@@ -1,0 +1,11 @@
+configuration {
+    show-icons: true;
+    drun-display-format: "{name}";
+    display-drun: "Apps";
+    disable-history: false;
+    hide-scrollbar: true;
+    matching: "fuzzy";
+    sidebar-mode: false;
+}
+
+@theme "himalaya"

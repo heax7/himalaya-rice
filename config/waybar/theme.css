@@ -1,0 +1,13 @@
+/* GENERATED FILE — edit config/myrice/theme.toml and run scripts/apply-theme. */
+@define-color background #081016;
+@define-color surface #101A22DB;
+@define-color surface_alt #15232C;
+@define-color overlay #1C303B;
+@define-color foreground #E6F0F0;
+@define-color muted #8CA5AB;
+@define-color primary #74D7C8;
+@define-color secondary #8CB9E8;
+@define-color accent #E6AC53;
+@define-color danger #D66B79;
+@define-color success #8DD5A7;
+@define-color border #74D7C83D;

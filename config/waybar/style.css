@@ -1,0 +1,78 @@
+@import "theme.css";
+
+* {
+  font-family: "JetBrainsMono Nerd Font";
+  font-size: 11px;
+  min-height: 0;
+}
+
+window#waybar {
+  background: transparent;
+  color: @foreground;
+}
+
+#workspaces,
+#clock,
+#network,
+#pulseaudio,
+#battery,
+#tray {
+  background: @surface;
+  border: 1px solid @border;
+  border-radius: 12px;
+  padding: 0 11px;
+  margin: 0 2px;
+  min-height: 30px;
+}
+
+#workspaces {
+  padding: 0 5px;
+}
+
+#workspaces button {
+  color: @muted;
+  background: transparent;
+  border: 0;
+  padding: 0 7px;
+  margin: 3px 1px;
+  border-radius: 9px;
+  transition: all 160ms ease;
+}
+
+#workspaces button.active {
+  color: @background;
+  background: @primary;
+}
+
+#workspaces button:hover {
+  color: @foreground;
+  background: @overlay;
+}
+
+#clock {
+  color: @foreground;
+}
+
+#network {
+  color: @secondary;
+}
+
+#pulseaudio {
+  color: @primary;
+}
+
+#battery {
+  color: @accent;
+}
+
+#battery.warning {
+  color: @accent;
+}
+
+#battery.critical {
+  color: @danger;
+}
+
+#tray {
+  padding: 0 8px;
+}

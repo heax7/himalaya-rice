@@ -1,0 +1,42 @@
+# Himalaya Rice — single source of truth for the visual system.
+# Hex colours are shared by Hyprland, Waybar, Rofi and Kitty generators.
+
+[meta]
+name = "Himalaya Night"
+version = "1.0"
+
+[font]
+ui = "JetBrainsMono Nerd Font"
+mono = "JetBrainsMono Nerd Font"
+size = 11
+
+[colors]
+background = "#081016"
+surface = "#101A22"
+surface_alt = "#15232C"
+overlay = "#1C303B"
+foreground = "#E6F0F0"
+muted = "#8CA5AB"
+primary = "#74D7C8"
+secondary = "#8CB9E8"
+accent = "#E6AC53"
+danger = "#D66B79"
+success = "#8DD5A7"
+shadow = "#02070A"
+
+[appearance]
+rounding = 12
+gaps_in = 6
+gaps_out = 12
+border_size = 1
+active_opacity = 0.95
+inactive_opacity = 0.82
+
+[blur]
+enabled = true
+size = 7
+passes = 3
+
+[animations]
+enabled = true
+speed = 7

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+WALLPAPER="$HOME/.config/hypr/assets/himalaya.png"
+
+if ! command -v swaybg >/dev/null 2>&1; then
+  echo "Himalaya Rice: swaybg is not installed." >&2
+  exit 1
+fi
+
+pkill -x swaybg 2>/dev/null || true
+swaybg -i "$WALLPAPER" -m fill >/dev/null 2>&1 &

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+mkdir -p "$HOME/Pictures/Screenshots"
+file="$HOME/Pictures/Screenshots/$(date +'%Y-%m-%d_%H-%M-%S').png"
+
+if command -v grim >/dev/null && command -v slurp >/dev/null; then
+  grim -g "$(slurp)" "$file"
+  wl-copy < "$file"
+  notify-send "Screenshot" "Saved to $(basename "$file")"
+else
+  notify-send "Himalaya Rice" "grim and slurp are required for screenshots."
+  exit 1
+fi

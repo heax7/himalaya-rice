@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if ! command -v rofi >/dev/null || ! command -v cliphist >/dev/null; then
+  notify-send "Himalaya Rice" "Install rofi and cliphist for clipboard history."
+  exit 1
+fi
+
+choice="$(cliphist list | rofi -dmenu -i -p "Clipboard")"
+[[ -z "$choice" ]] && exit 0
+printf '%s\n' "$choice" | cliphist decode | wl-copy
