@@ -1,0 +1,13 @@
+# Local/generated runtime files
+__pycache__/
+*.pyc
+.DS_Store
+
+# Generated theme layers (regenerated from config/myrice/theme.toml)
+config/hypr/theme.lua
+config/waybar/theme.css
+config/rofi/themes/himalaya.rasi
+config/kitty/theme.conf
+
+# User-specific monitor overrides, if you choose to keep them private
+config/hypr/monitors.local.lua
